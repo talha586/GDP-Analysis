@@ -1,19 +1,23 @@
 import json
-import pandas as pd
+import csv
 
-try:
-    with open('data.json', 'r') as f:
-        data_json = json.load(f)
-except FileNotFoundError:
-    print("JSON File Not Opened")
-else:
-    print("JSON File Loaded") 
-    print(data_json)
+def Loading_JSON_Data():
+    try:
+        with open('data.json', 'r') as f:
+            data_json = json.load(f)
+            print("JSON File Loaded")
+            return data_json
+        
+    except FileNotFoundError:
+        return "JSON File Not Loaded"
 
-try:
-    data_csv=pd.read_csv('gdp_with_continent_filled.csv')
-except FileNotFoundError:
-    print("CSV File Not Found")
-else:
-    print("CSV File Loaded")
-    print(data_csv)
+
+def Loading_CSV_Data():
+    try:
+        with open('gdp_with_continent_filled.csv','r') as f:
+            data_csv=csv.reader(f)
+            print("CSV File Loaded")
+            return list(data_csv)
+        
+    except FileNotFoundError:
+        return "Data Not Loaded"
