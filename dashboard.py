@@ -1,21 +1,49 @@
+import matplotlib.pyplot as plt
 import data_loader
 import data_process
-from pprint import pprint
 
-text_json=data_loader.Loading_JSON_Data()
-text_csv=data_loader.Loading_CSV_Data()
-#pprint(clean_text_csv)
+def display_dashboard():
+    try:
+        # Load and Process [cite: 49]
+        config = data_loader.loading_json_data()
+        header, raw_data = data_loader.loading_csv_data()
+        clean_data = data_process.clean_csv(raw_data)
+        
+        filtered = data_process.filter_data(clean_data, config)
+        result = data_process.perform_operation(filtered, config['operation'])
 
-header_text=text_csv[0]
-RegionName=text_json['region'].strip()
-RegionYear=str(text_json['year'])
+        # 1. Print Text Results [cite: 51, 52]
+        print("--- GDP ANALYSIS DASHBOARD ---")
+        print(f"Region: {config['region']} | Year: {config['year']}")
+        print(f"Operation: {config['operation'].upper()}")
+        print(f"Result: {result:,.2f}")
+        print("-------------------------------")
 
-clean_text_csv = data_process.Clean_CSV(text_csv[1:])
-filter_clean_text_csv = data_process.Filter_CSV(clean_text_csv,RegionName)
+        if not filtered:
+            print("No data available for these filters.")
+            return
 
-if not filter_clean_text_csv:
-    print("No record found")
+        # 2. Visualizations [cite: 29, 32, 53]
+        countries = [row[0] for row in filtered]
+        gdps = [float(row[3]) for row in filtered]
 
-else:
-    for row in filter_clean_text_csv:
-        pprint(dict(zip(header_text,row)))
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+
+        # Chart 1: Bar Chart [cite: 30]
+        ax1.bar(countries[:10], gdps[:10], color='skyblue')
+        ax1.set_title(f"Top Countries in {config['region']} ({config['year']})")
+        ax1.set_ylabel("GDP Value")
+        ax1.tick_params(axis='x', rotation=45)
+
+        # Chart 2: Pie Chart [cite: 30]
+        ax2.pie(gdps[:5], labels=countries[:5], autopct='%1.1f%%')
+        ax2.set_title("GDP Distribution (Top 5)")
+
+        plt.tight_layout()
+        plt.show()
+
+    except Exception as e:
+        print(f"Dashboard Error: {e}")
+
+if __name__ == "__main__":
+    display_dashboard()
