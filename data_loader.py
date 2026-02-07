@@ -17,7 +17,7 @@ def Loading_CSV_Data():
         with open('gdp_with_continent_filled.csv','r') as f:
             data_csv=csv.reader(f)
             print("CSV File Loaded")
-            return list(data_csv)
+            return tuple(data_csv)
         
     except FileNotFoundError:
         return "Data Not Loaded"

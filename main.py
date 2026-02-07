@@ -7,7 +7,7 @@ text_csv=data_loader.Loading_CSV_Data()
 #pprint(clean_text_csv)
 
 header_text=text_csv[0]
-RegionName=text_json['region'].strip()
+RegionName=text_json['region'].strip().lower()
 RegionYear=str(text_json['year'])
 
 clean_text_csv = data_process.Clean_CSV(text_csv[1:])
