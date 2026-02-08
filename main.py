@@ -1,5 +1,8 @@
 import data_loader
 import data_process
+import dashboard
+import matplotlib.pyplot as plt
+
 from pprint import pprint
 
 text_json=data_loader.Loading_JSON_Data()
@@ -18,7 +21,9 @@ operation=str(text_json['operation'])
 clean_text_csv = data_process.Clean_CSV(data_rows)
 
 #Filter For Region
-# filter_clean_text_csv = data_process.Filter_CSV_Region(clean_text_csv,RegionName)
+start_index=header_text.index(start_year)
+end_index=header_text.index(RegionYear)
+filter_clean_text_csv = data_process.Filter_CSV_Region(clean_text_csv,RegionName)
 
 # if not filter_clean_text_csv:
 #     print("No record found")
@@ -30,10 +35,10 @@ clean_text_csv = data_process.Clean_CSV(data_rows)
 
 #Filter For Country
 
-start_index=header_text.index(start_year)
-end_index=header_text.index(RegionYear)
+# start_index=header_text.index(start_year)
+# end_index=header_text.index(RegionYear)
 
-filter_clean_text_csv=data_process.Filter_CSV_Country(clean_text_csv,CountryName)
+# filter_clean_text_csv=data_process.Filter_CSV_Country(clean_text_csv,CountryName)
 
 # if not filter_clean_text_csv:
 #     print("No record Found")
@@ -42,4 +47,12 @@ filter_clean_text_csv=data_process.Filter_CSV_Country(clean_text_csv,CountryName
 #         pprint(dict(zip(header_text,row))) 
 
 result=data_process.Statistical_Analysis(operation,filter_clean_text_csv,start_index,end_index)
-print(f"Result of {operation} of GDP on {CountryName} is: {result}")
+print(f"Result of {operation} of GDP on {RegionName} is: {result}")
+
+if not filter_clean_text_csv:
+    print("No record found for the specified region.")
+else:
+    print(f"Processing data for Region: {RegionName}...")
+    
+    dashboard.Plot_Bar_Chart(header_text, filter_clean_text_csv, RegionYear)
+    dashboard.Plot_Line_Chart(header_text, filter_clean_text_csv, start_year="1960", end_year=RegionYear)

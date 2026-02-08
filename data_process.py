@@ -1,5 +1,3 @@
-from functools import reduce
-
 def Clean_CSV(text_csv):
     cleaned_csv_file=map(lambda row:[cell if cell!='' else 0.0 for cell in row], text_csv)
     return tuple(cleaned_csv_file)
