@@ -102,7 +102,7 @@ class TransformationEngine:
     def _fastest_growing_continent(self, rows, start_year, end_year):
         continents = list({r.get("Continent", "") for r in rows})
 
-        def continent_growth():
+        def continent_growth(cont):
             c_rows  = [r for r in rows if r.get("Continent", "") == cont]
             s_total = sum(_to_float(r.get(start_year, 0)) for r in c_rows)
             e_total = sum(_to_float(r.get(end_year, 0)) for r in c_rows)
