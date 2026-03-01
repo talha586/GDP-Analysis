@@ -7,16 +7,25 @@ from plugins.inputs  import ExcelReader, JSONReader
 from plugins.outputs import ConsoleWriter, GraphicsChartWriter
 from core.engine     import TransformationEngine
 
+<<<<<<< HEAD
 INPUT_DRIVERS: dict = {
+=======
+INPUT_DRIVERS = {
+>>>>>>> fe075c743bb37d67cd427a33f9d7aed8f72573ef
     "excel": ExcelReader,
     "json":  JSONReader,
 }
 
+<<<<<<< HEAD
 OUTPUT_DRIVERS: dict = {
+=======
+OUTPUT_DRIVERS = {
+>>>>>>> fe075c743bb37d67cd427a33f9d7aed8f72573ef
     "console": ConsoleWriter,
     "charts":  GraphicsChartWriter,
 }
 
+<<<<<<< HEAD
 def load_config(path: str = "config.json") -> dict:
     """Parse the configuration file."""
     if not os.path.exists(path):
@@ -77,3 +86,12 @@ def bootstrap() -> None:
 
 if __name__ == "__main__":
     bootstrap()
+=======
+
+def load_config(path="config.json"):
+    if not os.path.exists(path):
+        print(f"ERROR: config file '{path}' not found.")
+        sys.exit(1)
+    with open(path, "r", encoding="utf-8") as fh:
+        return json.load(fh)
+>>>>>>> fe075c743bb37d67cd427a33f9d7aed8f72573ef
