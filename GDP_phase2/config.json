@@ -1,0 +1,9 @@
+{
+  "continent":     "Asia",
+  "start_year":    1990,
+  "end_year":      2020,
+  "decline_years": 5,
+  "input":         "excel",
+  "output":        "charts",
+  "data_path":     "data/gdp_with_continent_filled.xlsx"
+}
